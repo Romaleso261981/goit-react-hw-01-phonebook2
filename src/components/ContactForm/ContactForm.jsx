@@ -1,5 +1,13 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import {
+  InputLabel,
+  FormWrap,
+  InputSpan,
+  InputSpanName,
+  FormBtn,
+  InputForm,
+} from './ContactFormStyle.js';
 
 export default class ContactForm extends Component {
   state = {
@@ -25,10 +33,10 @@ export default class ContactForm extends Component {
   render() {
     const { name, number } = this.state;
     return (
-      <form onSubmit={this.onSubmit}>
-        <label>
-          <span>Name</span>
-          <input
+      <FormWrap onSubmit={this.onSubmit}>
+        <InputLabel>
+          <InputSpanName>Name</InputSpanName>
+          <InputForm
             onChange={this.handleChange}
             type="text"
             name="name"
@@ -37,10 +45,10 @@ export default class ContactForm extends Component {
             required
             value={name}
           />
-        </label>
-        <label>
-          <span>Number</span>
-          <input
+        </InputLabel>
+        <InputLabel>
+          <InputSpan>Number</InputSpan>
+          <InputForm
             onChange={this.handleChange}
             type="tel"
             name="number"
@@ -49,9 +57,9 @@ export default class ContactForm extends Component {
             required
             value={number}
           />
-        </label>
-        <button type="submit">Add contact</button>
-      </form>
+        </InputLabel>
+        <FormBtn type="submit">Add contact</FormBtn>
+      </FormWrap>
     );
   }
 }
