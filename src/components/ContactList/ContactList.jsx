@@ -1,20 +1,28 @@
-import { ContactItem, List } from './ContactList.styled';
 
-const ContactList = ({ contactsData }) => {
+import {
+  ContactItem,
+  List,
+  SpanName,
+  SpanNumber,
+  ContactBtn,
+} from './ContactList.styled';
+
+
+const ContactList = ({ contactsData, deleteContact}) => {
   return (
     <List>
       {contactsData.map(contact => (
         <ContactItem key={contact.id}>
-          <span>{contact.name}</span>
-          <span>{contact.number}</span>
-          <button
+          <SpanName>{contact.name}</SpanName>
+          <SpanNumber>{contact.number}</SpanNumber>
+          <ContactBtn
             type="button"
             onClick={() => {
-              console.log(contact.id);
+              deleteContact(contact.id);
             }}
           >
             Delete
-          </button>
+          </ContactBtn>
         </ContactItem>
       ))}
     </List>
