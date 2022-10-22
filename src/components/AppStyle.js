@@ -10,6 +10,7 @@ export const FilterInput = styled.input`
   background-color: whitesmoke;
 `;
 
+
 export const NotificationSpan = styled.div`
 text-align: center;
 color: black;
