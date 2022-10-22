@@ -16,18 +16,26 @@ export default class App extends Component {
   };
 
   addContact = contact => {
-    console.log('addContact');
     this.setState(prevState => {
       const newContact = { id: nanoid(), ...contact };
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
+    // if (localStorageQueue.find(option => option.id === infoFilm.id)) {
+    //   Notiflix.Notify.warning(`Фильм ${infoFilm.title || infoFilm.name} уже есть в QUEUE`, {
+    //       position: 'left-top',
+    //       showOnlyTheLastOne: false,
+    //       clickToClose: true,
+    //       timeout: 3000,
+    //   });
     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   };
 
   deleteContact = id => {
-    console.log(id);
+    const contactArr = localStorage.getItem('contacts');
+    const parseContactArr = JSON.parse(contactArr);
+    console.log(parseContactArr);
   };
 
   handleFilter = e => {
