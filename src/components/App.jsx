@@ -1,6 +1,4 @@
-import {
-  FilterInput,
-  NotificationSpan} from './AppStyle.js';
+import { FilterInput, NotificationSpan } from './AppStyle.js';
 import { Component } from 'react';
 import Notification from './Notification/Notification';
 import { nanoid } from 'nanoid';
@@ -14,39 +12,39 @@ export default class App extends Component {
   };
 
   handleChange = e => {
-    console.log("handleChange");
     this.setState({ name: e.target.value });
   };
 
   addContact = contact => {
-    console.log("addContact");
+    console.log('addContact');
     this.setState(prevState => {
       const newContact = { id: nanoid(), ...contact };
-      localStorage.user = JSON.stringify([...prevState.contacts, newContact]);
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   };
 
   deleteContact = id => {
-    console.log("deleteContact");
+    console.log(id);
   };
 
   handleFilter = e => {
-    console.log("handleFilter");
     this.setState({ filter: e.target.value });
   };
 
   getFilteredContacts = () => {
-    console.log();
-    const { contacts, filter } = this.state;
-
-    return contacts.filter(contact => contact.name.includes(filter));
+    const savedSettings = localStorage.getItem('contacts');
+    let localContact = JSON.parse(savedSettings);
+    if (localContact === null) {
+      localContact = this.state;
+    }
+       
+    return localContact;
   };
 
   render() {
-    // const { contacts } = this.state;
     const filteredContacts = this.getFilteredContacts();
     return (
       <>
@@ -58,10 +56,9 @@ export default class App extends Component {
             deleteContact={this.deleteContact}
           />
         ) : (
-            <NotificationSpan>
+          <NotificationSpan>
             <Notification message="No contacts yet" />
-            </NotificationSpan>
-          
+          </NotificationSpan>
         )}
       </>
     );

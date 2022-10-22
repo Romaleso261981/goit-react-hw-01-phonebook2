@@ -8,7 +8,7 @@ import {
 } from './ContactList.styled';
 
 
-const ContactList = ({ contactsData, deleteContact}) => {
+const ContactList = ({ contactsData, deleteContact }) => {
   return (
     <List>
       {contactsData.map(contact => (

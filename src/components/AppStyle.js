@@ -15,3 +15,15 @@ export const NotificationSpan = styled.div`
 text-align: center;
 color: black;
 `;
+
+
+// localStorage.setItem('contacts', JSON.stringify(contacts));
+
+// getFilteredContacts = () => {
+//     const savedSettings = localStorage.getItem('contacts');
+//     let localContact = JSON.parse(savedSettings);
+//     if (localContact === null) {
+//       localContact = this.state;
+//     }
+//     return localContact;
+//   };
