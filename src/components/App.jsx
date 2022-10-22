@@ -6,15 +6,17 @@ import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
 const INITIAL_STATE = {
   contacts: [
-    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    { id: nanoid(), name: 'коля мельніков', number: '097 742 4367' },
+    { id: nanoid(), name: 'коля подсобнік', number: '068 823 9986' },
+    { id: nanoid(), name: 'леся', number: '645-17-79' },
+    { id: nanoid(), name: 'Сергій Дикий', number: '067......54' },
   ],
   filter: '',
 };
+
 export default class App extends Component {
-  state = {...INITIAL_STATE};
+  state = { ...INITIAL_STATE };
+  
 
   handleChange = e => {
     this.setState({ name: e.target.value });
@@ -22,8 +24,8 @@ export default class App extends Component {
 
   addContact = contact => {
     const { contacts } = this.state;
-    if (contacts.filter(({ name }) => name === contact.name).length !== 0) {
-      alert(contact.name + ' is already in contacts!');
+    if (contacts.filter(({ number }) => number === contact.number).length !== 0) {
+      alert(contact.number + ' this number is already in your phone book');
       return;
     }
     this.setState(prevState => {
@@ -36,6 +38,7 @@ export default class App extends Component {
   };
 
   deleteContact = id => {
+    console.log(id);
     this.setState(({ contacts }) => {
       const updatedContacts = contacts.filter(contact => contact.id !== id);
       return { ...INITIAL_STATE, contacts: updatedContacts };
