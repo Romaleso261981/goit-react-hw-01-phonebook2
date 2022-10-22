@@ -4,38 +4,42 @@ import Notification from './Notification/Notification';
 import { nanoid } from 'nanoid';
 import ContactList from './ContactList/ContactList';
 import ContactForm from './ContactForm/ContactForm';
-
+const INITIAL_STATE = {
+  contacts: [
+    { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+    { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+    { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+    { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+  ],
+  filter: '',
+};
 export default class App extends Component {
-  state = {
-    contacts: [],
-    filter: '',
-  };
+  state = {...INITIAL_STATE};
 
   handleChange = e => {
     this.setState({ name: e.target.value });
   };
 
   addContact = contact => {
+    const { contacts } = this.state;
+    if (contacts.filter(({ name }) => name === contact.name).length !== 0) {
+      alert(contact.name + ' is already in contacts!');
+      return;
+    }
     this.setState(prevState => {
       const newContact = { id: nanoid(), ...contact };
       return {
         contacts: [...prevState.contacts, newContact],
       };
     });
-    // if (localStorageQueue.find(option => option.id === infoFilm.id)) {
-    //   Notiflix.Notify.warning(`Фильм ${infoFilm.title || infoFilm.name} уже есть в QUEUE`, {
-    //       position: 'left-top',
-    //       showOnlyTheLastOne: false,
-    //       clickToClose: true,
-    //       timeout: 3000,
-    //   });
     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
   };
 
   deleteContact = id => {
-    const contactArr = localStorage.getItem('contacts');
-    const parseContactArr = JSON.parse(contactArr);
-    console.log(parseContactArr);
+    this.setState(({ contacts }) => {
+      const updatedContacts = contacts.filter(contact => contact.id !== id);
+      return { ...INITIAL_STATE, contacts: updatedContacts };
+    });
   };
 
   handleFilter = e => {
@@ -43,13 +47,11 @@ export default class App extends Component {
   };
 
   getFilteredContacts = () => {
-    const savedSettings = localStorage.getItem('contacts');
-    let localContact = JSON.parse(savedSettings);
-    if (localContact === null) {
-      localContact = this.state;
-    }
-       
-    return localContact;
+    const { contacts, filter } = this.state;
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
   };
 
   render() {
